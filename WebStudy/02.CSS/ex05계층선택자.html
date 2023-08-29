@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*계층선택자
+            - 위치를 기준으로 디자인을 적용*/
+        
+        /*자손선택자*/
+        /*ex) div 자손의 p태그에 적용*/
+        /*div p{  
+            color : red;
+        } */
+
+        /*자식선택자*/
+        /*div > p{
+            color : red;
+        }*/
+        /*근접후행 선택자 : p태그 바로 옆의 span태그에 적용*/
+        /*p+span{
+            color : red;
+        }*/
+        /*후행 선택자 : p태그 옆에 오는 모든 span태그에 적용*/
+       p~span{
+            color : purple;
+        }
+    </style>
+</head>
+<body>
+    <p>송아지</p>
+    <div>
+        <P>강아지</P>
+        <span>고양이</span>
+        <table>
+            <tr>
+                <td>
+                    <p>병아리</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <p>까르보나라</p>
+    <span>토마토</span>
+    <span>바질</span>
+    <span>바지락</span>
+
+</body>
+</html>

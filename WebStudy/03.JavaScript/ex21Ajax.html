@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="movie-list"></div>
+        
+        <!-- <table>
+            <tr>
+                <th>순위</th>
+                <th>영화명</th>
+                <th>개봉일</th>
+
+            </tr>
+            <tr>
+                <td>순위</td>
+                <td>영화명</td>
+                <td>개봉일</td>
+            </tr>
+        </table> -->
+    <button id="req-btn">영화정보출력하기</button>
+
+    <script src="./js/jquery-3.7.0.js"></script>
+    <script>
+        
+        //Ctrl + k  + f : 코드 정렬
+        //shift + tab : 내어쓰기
+
+        
+        //Ajax(비동기통신)
+        // - 화면의 갱신없이 서버의 요청을 보내는 통신 방식
+
+    let getMovieData = function () {
+            let movieURL = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=20230714"
+
+            // Ajax함수 사용하는 방법(url,success 필요)
+            // url : 요청을 보낼 주소
+            $.ajax({// 매개변수 형태는 객체 형태로 중괄호{} 구성
+                url : movieURL, // 객체 형태이기 때문에 , 표시
+
+                //success 의 function에 매개변수를 정의해서 데이터를 받아온다.
+                success : function (res) {
+                    // 요청이 성공 했을 때 실행 할 로직 구현
+                    // 서버에서 보내주는 데이터를 받아올 때 function()에 매개변수를 지정해줘야 한다.+
+                    //alert("요청성공");
+                    //alert(res);
+                    //console.log(res);
+                    //console.log(res.boxOfficeResult);
+                    //console.log(res.boxOfficeResult.dailyBoxOfficeList);
+
+                    // movieList 변수에 객체 리스트가 저장된다.
+                    let movieList = res.boxOfficeResult.dailyBoxOfficeList;
+                    drawTable(movieList);
+                },
+                
+                error : function () {
+                    // 요청이 실패 했을 때 실행 할 로직 구현
+                    alert("요청실패...");
+                }
+            });
+        }//end getMovieData()
+
+        let drawTable = function (movieList) {
+            let resultHTML = `<table border="1">
+                                    <tr>
+                                        <th>순위</th>
+                                        <th>영화명</th>
+                                        <th>개봉일</th>
+                                    </tr> 
+                                    `;
+
+            // length 자동완성이 되지 않는다.
+            // 영화이름(movieNm),개봉일(openDt),순위(rank)
+            for (let i = 0; i < movieList.length; i++) {
+                //console.log(movieList[i].rank, movieList[i].movieNm, movieList[i].openDt);
+                resultHTML += `
+                        <tr>
+                            <td>${movieList[i].rank}</td>
+                            <td>${movieList[i].movieNm}</td>
+                            <td>${movieList[i].openDt}</td>
+                        </tr>
+                    `;
+            }
+            resultHTML += `</table>`;
+
+            // id가 "movie-list"인 div태그에 resultHTML 값을 저장 -> 웹 페이지 출력
+            $("#movie-list").html(resultHTML);
+        }//end drawTable
+
+        //버튼을 클릭했을 때 영화정보 가져오기
+        // on을 사용하여 이벤트 적용, id가 req-btn 인 버튼을 click 할 경우 getMovieData 정보를 가져온다.
+        $("#req-btn").on("click", getMovieData);
+    
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        let fruits = ["apple", "avocado", "banana", "blueberry", "cherry", "dragon fruit", 
+    "fig", "grape", "kiwi", "lime", "mango", "orange", "oriental melon", "pear",
+        "peach", "pineapple", "shine muscat", "strawberry", "tomato", 
+    "water melon", "yuja"];
+
+        fruits.pop();
+        fruits.push("grapefruit");
+        fruits.push("cherry tomato");
+        fruits.push("pint nut");
+        fruits.push("korean blackberry"); 
+        //fruits.push(("grapefruit","cherry tomato","pint nut","korean blackberry");
+
+        let orange = fruits.includes("orange");
+        console.log("orange가 있나요?",orange);
+
+        let kiwi = fruits.includes("kiwi");
+        console.log("kiwi가 있나요?",orange);
+
+        let wateramelon = fruits.indexOf("water melon");
+        console.log(wateramelon);
+
+        fruits[19]="melon"
+        
+        let lime = fruits.indexOf("lime");
+        console.log(lime);
+
+        fruits.splice(9,3);
+        
+        let shine = fruits.indexOf("shine muscat");
+        console.log(shine);
+
+        fruits.slice(14);
+        console.log(fruits);
+
+        let pear = fruits.indexOf("pear");
+        let pineapple = fruits.indexOf("pineapple");
+        console.log(pear, pineapple);
+
+        let new_fruits = fruits.slice(10,13);
+        console.log(new_fruits);
+
+    </script>
+</body>
+</html>

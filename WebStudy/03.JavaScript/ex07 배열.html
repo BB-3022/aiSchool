@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+        .push() : 마지막 위치에 데이터 추가
+        .length() : 배열의 크기
+        .pop() : 마지막 위치 데이터 삭제
+        .splice(시작위치, 데이터 개수) 시작위치 부터 데이터 개수만큼 삭제
+        .splice(시작위치) 시작위치부터 이후 모든 데이터 삭제
+        .indexOf(데이터) : 데이터의 인덱스 값을 반환(number)
+        .includes(데이터) : 배열에 데이터가 있는지 확인 후 반환(true, false)
+        .slice(시작위치, 데이터 개수) : 시작위치부터 데이터 개수-1 만큼 잘라내어 새로운 배열 생성 
+
+
+
+        */
+        //배열(Array)
+        // - 데이터를 추가할 때 자동으로 공간이 생성된다.
+        // - 모든 자료형을 저장할 수 있는 자료구조
+        // - 데이터를 접근할 때 인덱스를 활용
+
+        // 배열선언&생성
+        let arr1 = [];
+        let arr2 = [1,2,3,4,5];
+
+        // 1. 데이터 추가
+        // 1-1.인덱스 활용
+        arr1[0] =1;
+        arr1[1] = 2;
+        arr1[2] = 3;
+        arr1[3] = 4;
+        arr1[4] = 5;
+        console.log(arr1);
+
+        // 1-2.push() 활용 : 마지막 위치에 데이터 추가
+        arr1.push(6);
+        arr1.push(7);
+        arr1.push(8);
+        arr1.push(9);
+        arr1.push(10);
+        console.log(arr1);
+
+        // 2. 데이터 접근
+        // 2-1.인덱스 활용, 반복문
+        console.log(arr1[4]);
+
+        // 배열변수.length : 배열의 크기
+        for(let i=0; i<arr1.length ;i++){
+            console.log(arr1[i]);
+        }
+
+        // 3. 데이터 수정
+        // 3-1. 인덱스 활용
+        arr1[4] = 20;
+        console.log(arr1);
+
+        // 4. 데이터 삭제
+        // 4-1 pop() 활용 : 마지막 위치 데이터 삭제
+        arr1.pop();
+
+        console.log(arr1);
+        // 4-2. splice(삭제할 데이터 인덱스, 삭제할 데이터 개수) 활용
+        // 배열 내 원하는 위치의 데이터를 삭제할 때 사용하는 함수
+        // 삭제할 데이터 개수를 작성하지 않은 경우, 인덱스를 기준으로 이후 모든 데이터 삭제
+        arr1.splice(4,2);
+        console.log(arr1);
+
+        arr1.splice(4);
+        console.log(arr1);
+
+        // 5. 배열 내 데이터의 위치(인덱스)를 찾는 방법
+        let index = arr1.indexOf(3); // 반환값(number)을 가지고 있다.
+        console.log("데이터 3의 위치",index);
+
+        // 6. 배열 내 데이터가 있는지 체크하는 방법
+        let isCheck = arr1.includes(5);// 반환값(true/false)
+        console.log("데이터 5가 있는가?", isCheck);
+
+        let isCheck2 = arr1.includes(1);
+        console.log("데이터 1가 있는가?", isCheck2);
+
+        // 7. 특정 범위의 데이터를 잘라내는 방법
+        // end : 입력한 숫자 -1 범위까지 접근
+        // 기존 배열에 영향을 주지 않고, 잘라낸 데이터를 새로운 배열로 만들어준다.
+        let new_arr = arr1.slice(1,3);
+        console.log(new_arr);
+
+        console.log(arr1);
+
+    </script>
+</body>
+</html>

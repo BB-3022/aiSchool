@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 400px;
+            height: 400px;
+            border: 5px solid black;
+            text-align: center;
+            margin: 10px;
+        }
+
+        .box-img{
+            width: 150px;
+            height: 150px;
+        }
+
+        #result-me, #result-computer{
+            font-size: 2em;
+        }
+
+        .container>button {
+            margin-top: 10px;
+        }
+
+        .win {
+            border: 3px solid green;
+        }
+
+        .lose {
+            border: 3px solid red;
+        }
+
+        .tie {
+            border: 3px solid black;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="box">
+            <h1>Me</h1>
+            <div id="box-me">...</div>
+            <h3 id="result-me">...</h3>
+        </div>
+        <div class="box">
+            <h1>Computer</h1>
+            <div id="box-computer">...</div>
+            <h3 id="result-computer">...</h3>
+        </div>
+    </div>
+
+    <div class="container">
+        <button id="btn-play">Play</button>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        /*
+            1. 유저가 Play 버튼을 누른다.
+            2. 유저와 컴퓨터는 랜덤으로 가위, 바위, 보를 출력한다.
+            3. 유저와 컴퓨터의 값을 비교하여 출력한다.
+              3-1. 승패에 따라 win, lose 를 출력
+              3-2. 비긴 경우, tie 출력
+            4. 승패에 따라 테두리가 다르게 출력한다. ( HTML객체.style.border 활용 ) 
+              4-1. 이긴 경우, 초록색 테두리
+              4-2. 진 경우, 빨간색 테두리
+              4-3. 비긴 경우, 검정색 테두리 
+        */
+      
+
+        let play = function(){
+            let rsp = ["가위", "바위", "보"];
+            //data 배열에 있는 값에 접근하기 위한 인덱스변수
+            let userIdx = parseInt(Math.random()*3);
+            let comIdx = parseInt(Math.random()*3);
+
+            const boxMe = document.getElementById("box-me");
+            boxMe.innerHTML = `<img class="box-img" src="./img/${img(rsp[userIdx])}.png">`;
+            const boxCom = document.getElementById("box-computer");
+            boxCom.innerHTML = `<img class="box-img" src="./img/${img(rsp[comIdx])}.png">`;
+            const resultMe = document.getElementById("result-me");
+            const resultCom = document.getElementById("result-computer");
+            const box = document.getElementsByClassName("box");
+            let me = getResultMe(rsp[userIdx], rsp[comIdx]);
+            let com =  getResultMe(rsp[comIdx], rsp[userIdx]);
+            resultMe.innerText = me;
+            resultCom.innerText = com;
+
+            
+
+            // 태그의 속성을 추가할 때 사용하는 메소드
+            // * class 속성값은 한 개 이상 정의할 수 있다
+            // * 여러 개 값이 정의된 경우, 다양한 용도로 활용 가능
+            // 여러개 클래스를 만들어놓고 상황에 맞게 스타일을 적용하게 만들 수 있음
+            // - 공통된 스타일, 고유한 스타일, 자바스크립트로 접근 등...
+            // ex) <div class = "box win me(새로운 클래스)...>"
+            box[0].setAttribute("class", `box ${me}`);
+            box[1].setAttribute("class", `box ${com}`);
+            // class속성에다가 값(box클래스 , ${me} = win/lose이면 win/lose클래스 스타일 적용)을 넣겠다
+            // 공백을 기준으로 값을 하나 더 쓰면 해당 이름으로 클래스를 하나 더 만든다.
+            // box에 정의된 스타일 반영 + 새로운 클래스로 정의된 스타일 반영
+        }
+
+        let img = function(data){
+            // 조건문이 한줄이면 {}생략가능
+            if(data === "가위"){
+                return "scissors";
+            }else if(data === "바위"){
+                return "rock";
+            }else{
+                return "paper";
+            }
+        }
+
+      
+        
+
+        let getResultMe = function(me, computer){
+            if(me === computer){
+                return "tie";
+            }else if(me === "바위"){
+                return computer === "가위" ? "win" : "lose";
+            }else if(me === "가위"){
+                return computer === "보" ? "win" : "lose";
+            }else if(me === "보"){
+                return computer === "바위" ? "win" : "lose";
+            }
+        }
+                // let getResultCom = function(me, computer){
+        //     if(me === computer){
+        //         return "tie";
+        //     }else if(computer === "바위"){
+        //         return me === "가위" ? "WIN" : "LOSE";
+        //     }else if(computer === "가위"){
+        //         return me === "보" ? "WIN" : "LOSE";
+        //     }else if(computer === "보"){
+        //         return me === "바위" ? "WIN" : "LOSE";
+        //     }
+        // }
+    </script>
+</body>
+
+</html>

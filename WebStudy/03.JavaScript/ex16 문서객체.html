@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1 id="msg">날씨가 좋아요!</h1>
+    <p id="msg2">
+        오늘 점심은 돈까스
+        <p> 오늘의 점심 메뉴는? </p>
+    </p>
+    
+    <script>
+        // HTML 문서 내 태그를 제어하려면 가장 먼저 해야 하는 것
+        // -> HTML 객체에 접근(☆☆☆)
+
+        // document : 현재 HTML 문서
+        // .getElementById("msg") : id가 "msg"인 HTML 객체를 접근
+
+        // html 객체의 값이 변하지 않기 위해 const 사용
+        const msg = document.getElementById("msg");
+        const msg2 = document.getElementById("msg2");
+
+        console.log("접근한 객체 : " + msg);
+        console.log(msg);
+
+        // HTML객체.innterText : HTML 태그의 컨텐츠를 문자열로 반환하는 속성
+        console.log(msg.innerText); // 태그에 있는 컨텐츠를 가져온다.
+        console.log(msg.innerHTML);
+
+        // 해당 태그의 내용을 변경 할 때 사용(내용만 변경)
+        //msg.innerText = "비가 내릴 것 같아요"
+        
+        // 해당 태그의 내용과 태그를 적용할 때 사용
+        //msg.innerHTML = "<a href='#'>비가 내릴 것 같네요..</a>";
+
+        //id 가 "msg2"인 HTML 객체의 내용을 접근
+        console.log(msg2.innerText);
+        console.log(msg2.innerHTML);
+
+    </script>
+</body>
+</html>

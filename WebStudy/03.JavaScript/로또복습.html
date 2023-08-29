@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link href="https://fonts.googleapis.com/css?family=Jua:400" rel="stylesheet">
+    <style>
+
+        #container{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            height: 300px;
+            font-family: 'Jua';
+        }
+
+        h1{
+            margin: 0;
+            padding: 0;
+        }
+
+        #lotto-container{
+            display: flex;
+            align-items: center;
+            gap:20px;
+        }
+
+        .num{
+            width: 100px;
+            height: 100px;
+            border: 2px solid black;
+            border-radius: 50px;
+            /* background-color: orange; */
+            text-align: center;
+            line-height: 100px;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .bonus-connect{
+            font-size: 3em;
+            font-weight: bold;
+        }
+
+        .bonus{
+            background-color: lightgray;
+        }
+        
+        .btn-lotto{
+            width: 150px;
+            height: 50px;
+            border: 0;
+            border-radius: 5px;
+            box-shadow: 3px 3px black;
+            font-family: 'Jua';
+            font-size: 1.5em;        
+            font-weight: bold;    
+        }
+        .btn-lotto:hover{
+            cursor: pointer;
+        }
+        .btn-lotto:active{
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="container">
+        <h1>로또 추첨기</h1>
+        <div id="lotto-container">
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="bonus-connect">+</div>
+            <div id="bonus" class="num"></div>
+        </div>
+        <!-- 로또 버튼을 클릭하면 lottoPlay 메서드가 실행된다. -->
+        <button class="btn-lotto" onclick="lottoPlay()">로또번호생성</button>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        //로또 추첨기 만들기
+        //1. 버튼을 클릭시 lottoPlay()가 실행된다.
+        //2. 1~45 사이의 랜덤한 숫자 7개가 생성된다.(중복없이)
+        //3. 생성된 7개 숫자를 웹 페이지에 출력한다.
+        // - 7개 중 6개는 class가 "num"인 div태그에 출력한다.
+        // - 마지막 번호를 id가 'bonus'인 div태그에 출력한다.
+        // * 웹 페이지 출력은 innerText 활용
+        
+        //로또번호생성 버튼을 클릭 하면, lottpPlay 메서드가 호출된다.
+        // let lottoPlay=function(){
+        //     //num 객체를 lotto 변수에 저장한다.
+        //     const lotto = document.getElementsByClassName("num");
+        //     // 배열을 저장할 수 있는 arr 변수를 선언한다.
+        //     let arr = [];
+            
+            
+        //     for(let i = 0; i < 7; i++){
+        //     // 로또 번호를 입력할 inputnum 변수를 선언한다.
+        //     let inputnum;
+        //     // do-while 문을 이용하여 중복 값 여부를 확인한다.
+        //     do{inputnum=parseInt(Math.random()*45)+1
+        //     }while(arr.includes(inputnum));
+        //     // push를 사용하여, inputnum으로 받아온 랜덤 수를 arr 배열에 저장한다.
+        //     arr.push(inputnum);
+        // }
+        //     // lotto 변수(num 객체 저장)에 arr에 들어 있는 로또 번호를 저장한다.
+        //     for(i=0;i<arr.length;i++){
+        //     lotto[i].innerText = arr[i];
+        // }
+        // } 
+
+        let lottoPlay = function(){
+            // 아래에 oNums 변수에 저장
+            let lottoNums = deduplicateNum;
+            // 유사배열 : 반환타입=HTMLCollection,형태는 배열이지만 배열이 아니다!
+            const nums = document.getElementsByClassName("num");
+            const bonus = document.getElementById("bonus");
+
+            for(let i=0;i<nums.length-1;i++){
+                nums[i].innerText = lottoNums[i];
+            }
+            
+            bonus.innerText = lottoNums[nums.length-1];
+        }
+
+        let deduplicateNum = function(){
+            // 7개의 수를 저장 할, numbers 배열 선언
+            let numbers = [];
+            // 중복 없는 랜덤 수를 numbers 배열에 저장
+            for(let i=0;i<7;i++){
+                numbers[i] = parseInt(Math.random()*45)+1;
+
+                for(let j=0;j<i;j++){
+                    if(numbers[i]===numbers[j]){
+                        i--;
+                    }
+                }
+            }
+            // lottoplay 메서드에서 호출 되어 실행하기 위해서, 랜덤으로 생성된 7개의 숫자의 배열을 반환 한다!
+            return numbers;
+        }
+       
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+//		m1.setSinger("아이들");
+//		m1.setTitle("퀸카");
+//		m1.setTime(90);
+//		m1.setYear(2023);

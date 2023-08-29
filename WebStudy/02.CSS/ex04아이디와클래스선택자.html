@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 아이디선택자와 클래스선택자 : 특정 요소(태그)에 디자인을 적용하고 싶을 때 사용
+            아이디선택자(#) html에서 한번만 쓰일 때 사용, 같은 id 중복 사용은 되지만 웹 표준 테스트에서 오류가 난다.
+            클래스선택자(.) html에서 여러 개의 태그에 공통적인 속성을 주고 싶을 때 사용
+            */
+        #apple{
+            color : red;
+        }
+        #banana{
+            color : yellow;
+        }
+        #blue{
+            color : purple;
+        }
+        #kiwi{
+            color : green;
+        }
+
+        .apple{
+            color : red;
+        }
+        .banana{
+            color : yellow;
+        }
+        .blue{
+            color : purple;
+        }
+        .kiwi{
+            color : green;
+        }
+        .text{
+            font-size : 30px;
+        }
+
+    </style>
+
+</head>
+<body>
+    <h1 id="apple">사과</h1>
+    <h1 id="banana">바나나</h1>
+    <h1 id="blue">블루베리</h1>
+    <h1 id="kiwi">키위</h1>
+
+    <ul>
+        <li class = "apple">사과</li>
+        <li class = "banana">바나나</li>
+        <li class = "blue">블루베리</li>
+        <li class = "kiwi text">키위</li>
+       
+    </ul>
+
+</body>
+</html>

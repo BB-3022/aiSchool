@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- 
+		data를 전송하기 위한 방법은 총 2가지가 존재한다.
+		Do Get 방식, Do Post 방식
+	 -->
+	<!-- Get 방식으로 데이터 전달하기 -->
+	<!-- 전송하고 싶은 곳 URL?name=value
+	  Ex06GetPost?get=47   데이터가 name=value 형식으로 URL 뒤에 붙어져서 넘어간다.
+	  QueryString 방식이라고도 부른다.
+	  URL 뒤에 데이터가 붙어 전달되므로, 1024byte 까지만 데이터 전달이 가능하다.
+	  
+	  장점 : 링크 공유가 가능하다.
+	  단점 : 적은 양의 데이터만 전달 가능하다. 보안에 취약하다.
+	  
+	  -->
+	<fieldset>
+		<!-- 테두리 설정 -->
+		<legend>Get방식</legend>
+		<form action="Ex06GetPost" method="get">
+			<!-- 주소 : Ex06GetPost로 데이터 전송, get 방식으로 -->
+			ID : <input type="text" name="get"> 
+			PW : <input type="text"
+				name="text"> <input type="submit">
+			<!-- submit 버튼을 눌렀을 때 전송 -->
+		</form>
+
+	</fieldset>
+	<!-- POST 방식으로 데이터 전달하기 -->
+	<!-- 패킷 바디안에 form 양식에 담겨 전달
+	 많은 양의 데이터를 전송가능하다. 보안에 강력하다(Get 방식에 비해서)
+	 
+	-->
+	<fieldset>
+		<!-- 테두리 설정 -->
+		<legend>POST방식</legend>
+		<form action="Ex06GetPost" method="post">
+			<!-- 주소 : Ex06GetPost로 데이터 전송, post 방식으로 -->
+			ID : <input type="text" name="post"> 
+			PW : <input type="text" name="post"> 
+			<input type="submit"> <!-- submit 버튼을 눌렀을 때 전송 -->
+		</form>
+	</fieldset>
+</body>
+</html>

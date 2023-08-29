@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1 id="tit">클릭 버튼 사용</h1>
+    <p id = "link-text"></p>
+    <p id = "list"></p>
+    
+    <!-- 1. 클릭 버튼 -->
+    <button onclick="h1Change()">클릭</button>
+    <!-- 2. 링크생성 버튼 -->
+    <button onclick="createLink()">링크생성</button>
+    <!-- 3. 목록생성 버튼 -->
+    <button onclick="createList()">목록생성</button>
+
+    <script>
+        //1. h1태그의 내용을 변경하는 함수 h1Change 생성 > 클릭버튼을 클릭하면 "변경완료"
+            let h1Change = function(){
+            
+            // 현재문서의(document) 아이디가 tit(tit)인 HTML 객체를 tit 변수에 저장한다.
+            const tit = document.getElementById("tit");
+            tit.innerText = "변경완료!";
+
+            //HTML태그 스타일 변경하는 방법
+            tit.style.color = "skyblue"; // 글자 색상 변경
+            tit.style.border = "1px solid blue" // 테두리 변경
+            tit.style.backgroundColor = "black"; //배경 색상 변경
+        }
+
+        //2. createLink 클릭 시, 해당 링크로 이동하는 코드
+        let createLink = function(){
+            const linkText = document.getElementById("link-text");
+            
+            linkText.innerHTML ="<a href = 'https://www.naver.com'>네이버이동</a>";
+        }
+        
+        //3. createList 클릭 시, "HTML","CSS","JavaScript" 화면에 생성
+        let createList = function(){
+            const list = document.getElementById("list");
+            
+            //※※※ 목록 값의 수가 많을 때 사용하면 좋은 코드 ※※※
+            let arr = ["HTML","CSS","JavaScript"];
+            
+            let resultHTML = "<ul>";
+            for(let i=0; i<arr.length;i++){
+                resultHTML += `<li>${arr[i]}</li>`;
+            }
+            resultHTML += "</ul>";
+
+            list.innerHTML = resultHTML;   
+        }
+            //※※※ 목록에 들어갈 데이터 값을 미리 알고 있을 때 사용하면 좋은 코드 ※※※
+            // list.innerHTML = `
+            //     <ul>
+            //         <li>HTML</li>
+            //         <li>CSS</li>
+            //         <li>JavaScript</li>
+            //     </ul>
+            //     `;
+            
+    </script>
+</body>
+</html>

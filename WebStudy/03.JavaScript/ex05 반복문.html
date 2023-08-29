@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 반복문 : While, do-While, for
+        // Java와 동일하게 사용
+        //for(let i=0;i<10;i++){
+        //    console.log(i);
+        //}
+
+        //실습문제-369게임 프로그램 만들기
+        //1. 1 ~30 까지 반복하는 프로그램 구현
+        //2. 일의 자리가 3,6,9 일 때 "짝"을 출력
+        //3. 2번에 해당하는 숫자가 아닌 경우에는 숫자로 출력
+
+        for(let i=1; i<51; i++) {
+                if (i>= 30 && i <=39) {
+                    document.write("짝")
+                    if(i%10 == 3 || i%10 == 6 || i%10 == 9) {
+                    document.write("짝" );
+                    }
+                    document.write("<br>")
+                } else {
+                    if(i%10 == 3 || i%10 == 6 || i%10 == 9) {
+                    document.write("짝<br>" );
+                } else {
+                    document.write(i+ "<br>");
+                }
+                }  
+            }
+    </script>
+</body>
+</html>

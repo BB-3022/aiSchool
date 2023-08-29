@@ -1,0 +1,13 @@
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="java.util.Iterator"><rhs name\="java.util.Scanner"/></lhs><lhs name\="java.io.Closeable"><rhs name\="java.util.Scanner"/></lhs><lhs name\="java.lang.AutoCloseable"><rhs name\="java.util.Scanner"/></lhs><lhs name\="\uC6D4\uAE09\uACC4\uC0B0\uD504\uB85C\uADF8\uB7A8\uD480\uC774.TempEmployee"><rhs name\="\uC6D4\uAE09\uACC4\uC0B0\uD504\uB85C\uADF8\uB7A8\uD480\uC774.TempEmployee"/></lhs><lhs name\="\uC6D4\uAE09\uACC4\uC0B0\uD504\uB85C\uADF8\uB7A8\uD480\uC774.PartTimeEmployee"><rhs name\="\uC6D4\uAE09\uACC4\uC0B0\uD504\uB85C\uADF8\uB7A8\uD480\uC774.PartTimeEmployee"/></lhs><lhs name\="javazoom.jl.player.MP3Player"><rhs name\="javazoom.jl.player.MP3Player"/></lhs></history>
+content_assist_number_of_computers=17
+eclipse.preferences.version=1
+java_multi_line_comment=255,162,162
+java_single_line_comment=255,162,162
+markOccurrences=false
+org.eclipse.jdt.internal.ui.navigator.layout=2
+org.eclipse.jdt.internal.ui.navigator.librariesnode=true
+org.eclipse.jdt.ui.formatterprofiles.version=23
+spelling_locale_initialized=true
+typefilter_migrated_2=true
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true
