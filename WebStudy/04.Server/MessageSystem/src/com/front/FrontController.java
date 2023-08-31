@@ -2,6 +2,7 @@ package com.front;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.controller.JoinService;
+import com.controller.LoginService;
+import com.controller.LogoutService;
+import com.controller.MsgAllDelete;
+import com.controller.MsgDelete;
+import com.controller.MsgSendService;
+import com.controller.UpdateService;
 import com.model.MemberDAO;
 import com.model.MemberDTO;
 import com.model.MessageDAO;
@@ -20,6 +28,28 @@ import com.model.MessageDTO;
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	// 객체를 한번만 생성 singleton pattern
+	// HashMap 생성
+	HashMap<String, ICommand> map = new HashMap<>();
+	
+	@Override
+	public void init() throws ServletException {
+		
+		super.init();
+		// 누군가에 의해서 현재 서블릿에 들어오게 된다면
+		// 서블릿을 실행할 수 있게 서블릿 객체를 생성하는 메서드
+		// 최초에 1번만 실행된다.
+		
+		//JoinService() 타입으로 넣었지만, ICommand 타입으로 업캐스팅 되어 저장된다.
+		map.put("JoinService.do", new JoinService());
+		map.put("LoginService.do", new LoginService());
+		map.put("LogoutService.do", new LogoutService());
+		map.put("UpdateService.do", new UpdateService());
+		map.put("MsgSendService.do", new MsgSendService());
+		map.put("MsgAllDelete.do", new MsgAllDelete());
+		map.put("MsgDelete.do", new MsgDelete());
+	}
+
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -29,7 +59,7 @@ public class FrontController extends HttpServlet {
 		String requestURI = request.getRequestURI();
 		//System.out.println(requestURI);
 		
-		//2ㄹ.Context path (웹 어플리케이션의 시작 주소)
+		//2.Context path (웹 어플리케이션의 시작 주소)
 		String contextPath = request.getContextPath();
 		//System.out.println(contextPath);
 		
@@ -37,152 +67,15 @@ public class FrontController extends HttpServlet {
 		String command = requestURI.substring(contextPath.length()+1);
 		System.out.println(command);
 	
+		request.setCharacterEncoding("EUC-KR");
+		response.setCharacterEncoding("EUC-KR");
 		
-		// 1.회원가입
-		if(command.equals("JoinService.do")) {
-			//회원가입 기능 구현
-			System.out.println("회원가입 기능 실행");
-			
-			request.setCharacterEncoding("EUC-KR");
-			
-			String email = request.getParameter("email");
-			String pw = request.getParameter("pw");
-			String phone = request.getParameter("phone");
-			String addr = request.getParameter("addr");
-			
-			MemberDTO dto = new MemberDTO(email, pw, phone, addr);
-
-			MemberDAO dao = new MemberDAO();
-			
-			int cnt = dao.join(dto);
-			
-			if(cnt>0) {
-				System.out.println("회원가입 성공!");
-			}else {
-				System.out.println("회원가입 실패!");
-			}
-			
-			response.sendRedirect("main.jsp");
+		// 요청에 따라 command ...??????
+//		ICommand service = map.get(command);
+//		String moveUrl = service.execute(request, response);
+//		response.sendRedirect(moveUrl);
 		
-		// 2.로그인
-		}else if(command.equals("LoginService.do")) {
-			
-			System.out.println("로그인 기능 실행");
-			
-			String email = request.getParameter("email");
-			String pw = request.getParameter("pw");
-		
-			MemberDTO dto = new MemberDTO(email, pw);
-			MemberDAO dao = new MemberDAO();
-			MemberDTO info = dao.login(dto);
-			
-			if(info != null) {
-				System.out.println("로그인 성공");
-				//System.out.println(info.toString());
-				HttpSession session = request.getSession();
-				session.setAttribute("info", info);
-			}else {
-				System.out.println("로그인 실패!");
-			}
-			
-			response.sendRedirect("main.jsp");
-		
-		// 3.로그아웃
-		}else if(command.equals("LogoutService.do")) {
-			
-			System.out.println("로그아웃 기능 실행");
-			
-			// request 객체로 부터 Session 을 불러와야 한다.
-			HttpSession session = request.getSession();
-			
-			//removeAttribute : 특정한 정보를 삭제
-			//invalidate : 로그아웃과 같이 모든 정보를 삭제
-			session.invalidate();
-			
-			response.sendRedirect("main.jsp");
-		
-		// 4.회원정보수정
-		}else if(command.equals("UpdateService.do")) {
-			
-			System.out.println("회원정보수정 기능 실행");
-			
-			request.setCharacterEncoding("EUC-KR");
-			
-			HttpSession session = request.getSession();
-			MemberDTO info = (MemberDTO) session.getAttribute("info");
-			
-			String pw = request.getParameter("pw");
-			String phone = request.getParameter("phone");
-			String addr = request.getParameter("addr");
-			
-			MemberDAO dao = new MemberDAO();
-			
-			MemberDTO changeInfo = new MemberDTO(info.getEmail(),pw,phone,addr);
-			
-			int cnt = dao.update(changeInfo);
-			
-			if(cnt>0) {
-				
-				session.setAttribute("info", changeInfo);
-				
-				response.sendRedirect("main.jsp");
-				
-			}else {
-				response.sendRedirect("update.jsp");
-			}	
-		
-		// 5.메세지작성 
-		}else if(command.equals("MsgSendService.do")) {
-			
-			request.setCharacterEncoding("EUC-KR");
-			response.setCharacterEncoding("EUC-KR");
-			
-			PrintWriter out = response.getWriter();
-			
-			String send_name = request.getParameter("send_name");
-			String receive_email = request.getParameter("receive_email");
-			String content = request.getParameter("content");
-			
-			MessageDTO dto = new MessageDTO(send_name, receive_email, content);
-						
-			MessageDAO dao = new MessageDAO();
-			int cnt = dao.insert(dto);
-			
-			String msg="";
-			
-			if(cnt>0) {
-				msg = "메세지 전송 성공!";
-			}else {
-				msg = "메세지 전송 실패...";
-			}	
-			out.print("<script>");
-			out.print("alert('"+ msg +"');");
-			out.print("location.href='main.jsp#two';");
-			out.print("</script>");	
-		
-		// 6.메세지 전체삭제
-		}else if(command.equals("MsgAllDelete.do")) {
-			
-			MessageDAO dao = new MessageDAO();
-			
-			HttpSession session = request.getSession();
-			MemberDTO info = (MemberDTO)session.getAttribute("info");
-			
-			dao.allDelete(info.getEmail());
-			
-			response.sendRedirect("main.jsp#two");
-		
-		// 6.메세지 개별삭제
-		}else if(command.equals("MsgDelete.do")) {
-			
-			String num = request.getParameter("num");
-			int ch_num = Integer.parseInt(num);
-			
-			MessageDAO dao = new MessageDAO();
-			dao.delete(ch_num);
-			response.sendRedirect("main.jsp#two");
-		
-		}
+		response.sendRedirect(map.get(command).execute(request, response));
 		
 	}
 }
