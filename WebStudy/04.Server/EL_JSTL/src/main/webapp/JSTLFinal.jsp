@@ -59,7 +59,7 @@
 		</tr>
 		<!-- 여기 아래에 JSTL을 통해서 list 안에 있는 회원의 정보를 출력 -->
 		<!-- list의 값이 하나씩 dto 에 담긴다. -->
-		<!-- 페이지 영역에 변수 i 가 저장된다.-->
+		<!-- varStatus="i" index를 사용하면 0부터 나온다.-->
 		
 		<c:forEach varStatus="i" items="${list}" var="dto" >
 			<tr>
