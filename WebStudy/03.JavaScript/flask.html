@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Webcam Video Recorder</title>
+ 
+<style>
+#container {
+    margin: 0px auto;
+    width: 500px;
+    height: 375px;
+    border: 10px #333 solid;
+}
+#videoElement {
+    width: 500px;
+    height: 375px;
+    background-color: #666;
+}
+#controls {
+    margin: 10px 0;
+    text-align: center;
+}
+
+</style>
+</head>
+ 
+<body>
+
+<div id="controls">
+    <button id="startButton" onclick="startRecording();">촬영</button>
+    <button id="stopButton" onclick="stopRecording();">중지</button>
+</div>
+<div id="container">
+    <video autoplay="true" id="videoElement"></video>
+</div>
+
+<!-- 소켓 관련 스크립트 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script>
+    var socket = io.connect('http://192.168.0.98:9000/');  // Flask 서버 주소로 변경
+
+    var video = document.querySelector("#videoElement");
+
+    var mediaRecorder;
+    var recordedChunks = [];
+
+    // 웹캠 스트림 요청
+    if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+    
+            .then(function (stream) {
+                video.srcObject = stream;
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.ondataavailable = function (event) {
+                    if (event.data.size > 0) {
+                        recordedChunks.push(event.data);
+                    }
+                };
+            })
+            .catch(function (error) {
+                console.log("Something went wrong: " + error);
+            });
+    }
+
+    // 촬영 버튼 클릭 시 웹 소켓을 통해 데이터 전송
+    function startRecording() {
+        recordedChunks = [];
+        mediaRecorder.start();
+        document.getElementById("startButton").disabled = true;
+        document.getElementById("stopButton").disabled = false;
+        socket.emit('start_recording'); // 웹 소켓 이벤트 발생
+    }
+
+    // 중지 버튼 클릭 시 웹 소켓 연결 종료
+    function stopRecording() {
+        mediaRecorder.stop();
+        document.getElementById("startButton").disabled = false;
+        document.getElementById("stopButton").disabled = true;
+        socket.emit('stop_recording'); // 웹 소켓 이벤트 발생
+    }
+
+
+</script>
+</body>
+</html>
