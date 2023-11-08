@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/holistic@0.1/holistic.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="container">
+    <video class="input_video" autoplay></video>
+  </div>
+
+  <script type="module">
+    const videoElement = document.querySelector('.input_video');
+    const holistic = new Holistic();
+
+    // 비디오 스트림 가져오기
+    async function setupCamera() {
+      const stream = await navigator.mediaDevices.getUserMedia({ 'video': true });
+      videoElement.srcObject = stream;
+
+      return new Promise((resolve) => {
+        videoElement.onloadedmetadata = () => {
+          resolve(videoElement);
+        };
+      });
+    }
+
+    // Holistic 모델 초기화 및 랜드마크 트래킹 시작
+    async function loadHolistic() {
+      await holistic.setOptions({
+        modelComplexity: 1,
+        smoothLandmarks: true,
+        enableSegmentation: true,
+        smoothSegmentation: true,
+        minDetectionConfidence: 0.5,
+        minTrackingConfidence: 0.5,
+      });
+      await holistic.load();
+    }
+
+    // 랜드마크 X, Y, Z 값을 콘솔에 출력
+    function processResults(results) {
+      if (results.multiPoseLandmarks) {
+        for (const landmark of results.multiPoseLandmarks[0]) {
+          const { x, y, z } = landmark;
+          console.log(`X: ${x.toFixed(2)}, Y: ${y.toFixed(2)}, Z: ${z.toFixed(2)}`);
+        }
+      }
+    }
+
+    async function runHolistic() {
+      const video = await setupCamera();
+      video.play();
+
+      loadHolistic();
+
+      video.addEventListener('loadeddata', () => {
+        holistic.start(video).then(() => {
+          console.log('Holistic model is running.');
+        });
+        holistic.onResults(processResults);
+      });
+    }
+
+    runHolistic();
+  </script>
+</body>
+</html>
